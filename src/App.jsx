@@ -3,6 +3,8 @@ import './App.css';
 import RockIcon from './assets/icon-rock.svg';
 import PaperIcon from './assets/icon-paper.svg';
 import ScissorsIcon from './assets/icon-scissors.svg';
+import Rules from './assets/image-rules.svg';
+import Close from './assets/icon-close.svg'
 
 
 function App() {
@@ -18,7 +20,11 @@ function App() {
     parseInt(localStorage.getItem('score')) || 0
   );
   const [result, setResult] = useState('');
+  const [showRules, setShowRules] = useState(false);
 
+  const toggleRules = () => {
+    setShowRules(prevShowRules => !prevShowRules);
+  };
   useEffect(() => {
     localStorage.setItem('score', score);
   }, [score]);
@@ -81,7 +87,21 @@ function App() {
         <p>Результат: {result === 'win' ? 'Вы выиграли!' : result === 'lose' ? 'Вы проиграли!' : 'Ничья'}</p>
       </div>
 
-      <button className="rules">Rules</button>
+      <button className="rules-button" onClick={toggleRules}>Rules</button>
+
+      {showRules && <div className='overlay' onClick={toggleRules}></div>}  
+
+      {showRules ? (
+        <div className="rules-container">
+          <div className='rules-header'>
+            <h1>RULES</h1>
+            <button onClick={toggleRules} className="close-rules-button">
+              <img src={Close} alt="Close" className='close'/>
+            </button>
+          </div>
+          <img src={Rules} alt="Rules" className='rules-image' />
+        </div>
+      ) : null}
     </div>
   );
 }

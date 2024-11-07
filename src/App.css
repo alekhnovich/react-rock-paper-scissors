@@ -31,6 +31,7 @@ body {
   font-size: 40px;
   width: 200px;
   text-align: left;
+  line-height: 0.9;
 }
 
 .score-div {
@@ -113,14 +114,26 @@ body {
   margin-top: 20px;
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+  z-index: 1; /* Убедитесь, что оверлей будет поверх всего */
+}
+
 .rules {
-  margin-top: 20px;
-  padding: 10px 20px;
+  position: absolute;
+  right: 70px;
+  margin-top: 10px;
+  padding: 10px 40px;
   font-size: 1rem;
   background-color: transparent;
   color: #fff;
   border: 1px solid #fff;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.2s;
 }
@@ -128,4 +141,38 @@ body {
 .rules:hover {
   background-color: #fff;
   color: #000;
+}
+
+.rules-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 400px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: #333;
+  z-index: 2;
+}
+
+.rules-header {
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  align-items: center;
+}
+.close-rules-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.rules-image {
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
 }
