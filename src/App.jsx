@@ -6,7 +6,6 @@ import ScissorsIcon from './assets/icon-scissors.svg';
 import Rules from './assets/image-rules.svg';
 import Close from './assets/icon-close.svg'
 
-
 function App() {
   const choices = [
     { name: 'ROCK', color: 'red', icon: RockIcon },
@@ -21,10 +20,12 @@ function App() {
   );
   const [result, setResult] = useState('');
   const [showRules, setShowRules] = useState(false);
+  const [gameOver, setGameOver] = useState(false);  // State to track if the game is over
 
   const toggleRules = () => {
     setShowRules(prevShowRules => !prevShowRules);
   };
+
   useEffect(() => {
     localStorage.setItem('score', score);
   }, [score]);
@@ -40,8 +41,9 @@ function App() {
 
     const outcome = determineWinner(userChoice, computerChoice);
     if (outcome === 'win') setScore(score + 1);
-    if (outcome === 'lose') setScore(score - 1)
+    if (outcome === 'lose') setScore(score - 1);
     setResult(outcome);
+    setGameOver(true);  // Set gameOver state to true
   };
 
   const determineWinner = (user, computer) => {
@@ -57,6 +59,13 @@ function App() {
     }
   };
 
+  const tryAgain = () => {
+    setUserChoice('');
+    setComputerChoice('');
+    setResult('');
+    setGameOver(false);  // Reset gameOver state
+  };
+
   return (
     <div className="game">
       <div className="header">
@@ -67,29 +76,44 @@ function App() {
         </div>
       </div>
 
-      <div className="choices">
-        {choices.map((choice) => (
-          <button
-            key={choice.name}
-            className={`choice ${choice.color}`}
-            onClick={() => playGame(choice)}
-          >
-            <img src={choice.icon} alt={choice.name} className="icon" />
-          </button>
-        ))}
-      </div>
+      {!gameOver && (
+        <div className="choices">
+          {choices.map((choice) => (
+            <button
+              key={choice.name}
+              className={`choice ${choice.color}`}
+              onClick={() => playGame(choice)}
+            >
+              <img src={choice.icon} alt={choice.name} className="icon" />
+            </button>
+          ))}
+        </div>
+      )}
 
-
-      <div className="result">
-        <p>
-          YOU PICKED: {userChoice.name}, THE HOUSE PICKED: {computerChoice.name}
-        </p>
-        <p>Результат: {result === 'win' ? 'Вы выиграли!' : result === 'lose' ? 'Вы проиграли!' : 'Ничья'}</p>
-      </div>
+      {gameOver && (
+        <div className="result">
+          <div className="user-choice">
+            <p>YOUR CHOICE:</p>
+            <button className={`choice ${userChoice.color}`}>
+              <img src={userChoice.icon} alt={userChoice.name} className="icon" />
+            </button>
+            <p>{userChoice.name}</p>
+          </div>
+          <div className="computer-choice">
+            <p>THE HOUSE CHOICE:</p>
+            <button className={`choice ${computerChoice.color}`}>
+              <img src={computerChoice.icon} alt={computerChoice.name} className="icon" />
+            </button>
+            <p>{computerChoice.name}</p>
+          </div>
+          <p>Результат: {result === 'win' ? 'Вы выиграли!' : result === 'lose' ? 'Вы проиграли!' : 'Ничья'}</p>
+          <button className="try-again" onClick={tryAgain}>Try Again</button>
+        </div>
+      )}
 
       <button className="rules-button" onClick={toggleRules}>Rules</button>
 
-      {showRules && <div className='overlay' onClick={toggleRules}></div>}  
+      {showRules && <div className='overlay' onClick={toggleRules}></div>}
 
       {showRules ? (
         <div className="rules-container">
