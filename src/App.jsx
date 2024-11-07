@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 import './App.css';
+import RockIcon from './assets/icon-rock.svg';
+import PaperIcon from './assets/icon-paper.svg';
+import ScissorsIcon from './assets/icon-scissors.svg';
+
 
 function App() {
   const choices = [
-    { name: 'rock', color: 'red', icon: '✊' },
-    { name: 'paper', color: 'blue', icon: '✋' },
-    { name: 'scissors', color: 'yellow', icon: '✌️' },
+    { name: 'ROCK', color: 'red', icon: RockIcon },
+    { name: 'PAPER', color: 'blue', icon: PaperIcon },
+    { name: 'SCISSORS', color: 'yellow', icon: ScissorsIcon },
   ];
   
   const [userChoice, setUserChoice] = useState('');
@@ -30,15 +34,16 @@ function App() {
 
     const outcome = determineWinner(userChoice, computerChoice);
     if (outcome === 'win') setScore(score + 1);
+    if (outcome === 'lose') setScore(score - 1)
     setResult(outcome);
   };
 
   const determineWinner = (user, computer) => {
     if (user.name === computer.name) return 'draw';
     if (
-      (user.name === 'rock' && computer.name === 'scissors') ||
-      (user.name === 'paper' && computer.name === 'rock') ||
-      (user.name === 'scissors' && computer.name === 'paper')
+      (user.name === 'ROCK' && computer.name === 'SCISSORS') ||
+      (user.name === 'PAPER' && computer.name === 'ROCK') ||
+      (user.name === 'SCISSORS' && computer.name === 'PAPER')
     ) {
       return 'win';
     } else {
@@ -63,14 +68,15 @@ function App() {
             className={`choice ${choice.color}`}
             onClick={() => playGame(choice)}
           >
-            <span className="icon">{choice.icon}</span>
+            <img src={choice.icon} alt={choice.name} className="icon" />
           </button>
         ))}
       </div>
 
+
       <div className="result">
         <p>
-          Вы выбрали: {userChoice.icon}, Компьютер выбрал: {computerChoice.icon}
+          YOU PICKED: {userChoice.name}, THE HOUSE PICKED: {computerChoice.name}
         </p>
         <p>Результат: {result === 'win' ? 'Вы выиграли!' : result === 'lose' ? 'Вы проиграли!' : 'Ничья'}</p>
       </div>
