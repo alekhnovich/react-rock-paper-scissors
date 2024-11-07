@@ -49,8 +49,11 @@ function App() {
   return (
     <div className="game">
       <div className="header">
-        <h1>Rock Paper Scissors</h1>
-        <div className="score">Score: {score}</div>
+        <h1 className='name-of-game'>ROCK PAPER SCISSORS</h1>
+        <div className='score-div'>
+          <span className='score'>SCORE</span>
+          <div className='score-value'>{score}</div>
+        </div>
       </div>
 
       <div className="choices">
