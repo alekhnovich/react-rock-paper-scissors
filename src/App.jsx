@@ -20,7 +20,7 @@ function App() {
   );
   const [result, setResult] = useState('');
   const [showRules, setShowRules] = useState(false);
-  const [gameOver, setGameOver] = useState(false);  // State to track if the game is over
+  const [gameOver, setGameOver] = useState(false);//состояние, чтобы следить, закончена ли игра
 
   const toggleRules = () => {
     setShowRules(prevShowRules => !prevShowRules);
@@ -63,7 +63,7 @@ function App() {
     setUserChoice('');
     setComputerChoice('');
     setResult('');
-    setGameOver(false);  // Reset gameOver state
+    setGameOver(false); 
   };
 
   return (
@@ -93,21 +93,25 @@ function App() {
       {gameOver && (
         <div className="result">
           <div className="user-choice">
-            <p>YOUR CHOICE:</p>
-            <button className={`choice ${userChoice.color}`}>
-              <img src={userChoice.icon} alt={userChoice.name} className="icon" />
-            </button>
-            <p>{userChoice.name}</p>
+            <p>YOU PICKED:</p>
+            <div className='user-choice-image-container'>
+              <button className={`choice ${userChoice.color}`}>
+                <img src={userChoice.icon} alt={userChoice.name} className="icon" />
+              </button>
+            </div>
+          </div>
+          <div className='try-again-container'>
+            <p>{result === 'win' ? 'YOU WIN!' : result === 'lose' ? 'YOU LOSE' : 'DRAW'}</p>
+            <button className="try-again" onClick={tryAgain}>TRY AGAIN</button>
           </div>
           <div className="computer-choice">
-            <p>THE HOUSE CHOICE:</p>
-            <button className={`choice ${computerChoice.color}`}>
-              <img src={computerChoice.icon} alt={computerChoice.name} className="icon" />
-            </button>
-            <p>{computerChoice.name}</p>
+            <p>THE HOUSE PICKED:</p>
+            <div className='computer-choice-image-container'>
+              <button className={`choice ${computerChoice.color}`}>
+                <img src={computerChoice.icon} alt={computerChoice.name} className="icon" />
+              </button>
+            </div>
           </div>
-          <p>Результат: {result === 'win' ? 'Вы выиграли!' : result === 'lose' ? 'Вы проиграли!' : 'Ничья'}</p>
-          <button className="try-again" onClick={tryAgain}>Try Again</button>
         </div>
       )}
 

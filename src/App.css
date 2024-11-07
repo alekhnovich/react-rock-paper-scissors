@@ -14,6 +14,7 @@ body {
 }
 
 .game {
+  margin-top: 100px;
   text-align: center;
   padding: 20px;
 }
@@ -26,6 +27,12 @@ body {
   border: solid #9f9f9fc2 2px;
   border-radius: 16px;
   padding: 18px 30px 18px 30px;
+  margin-top: 50px;
+  position: fixed;    /* Фиксируем хэдер */
+  top: 0;             /* Устанавливаем хэдер в верхнюю часть экрана */
+  left: 50%;          /* Центрируем хэдер по горизонтали */
+  transform: translateX(-50%); /* Центрируем хэдер с учетом его ширины */
+  z-index: 2;         /* Устанавливаем выше других элементов */
 }
 
 .name-of-game {
@@ -63,13 +70,13 @@ body {
   align-items: center;
   margin: 0 auto;
   margin-top: 30px;
-  width: 300px;
+  width: 400px;
 }
 
 .choice {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   background-color: #fff;
   display: flex;
@@ -110,25 +117,34 @@ body {
 }
 
 .result {
+  display: flex;
   font-size: 1.5rem;
   margin-top: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
 .user-choice, .computer-choice {
   display: inline-block;
-  width: 40%;
-  text-align: center;
+  width: 300px;
+  justify-content: center;
   margin: 0 10px;
 }
 
 .user-choice p, .computer-choice p {
   font-size: 1.2rem;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
+.user-choice-image-container,
+.computer-choice-image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
 .user-choice .choice, .computer-choice .choice {
-  width: 120px;
-  height: 120px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
   background-color: #fff;
   display: flex;
@@ -164,11 +180,17 @@ body {
   transform: scale(0.95);
 }
 
+.try-again-container p{
+  font-weight: 700;
+  font-size: 2.5rem;
+}
+
 .try-again {
+  width: 160px;
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: hsl(214, 47%, 23%);
-  color: #fff;
+  background-color: #fff;
+  color: hsl(214, 47%, 23%);
   border: none;
   border-radius: 10px;
   font-size: 1.2rem;
