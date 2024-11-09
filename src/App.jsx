@@ -101,9 +101,9 @@ function App() {
 
               {result === 'win' && (
                 <>
-                  <div className="ring" style={{ borderColor: userChoice.color }}></div>
-                  <div className="ring" style={{ borderColor: userChoice.color }}></div>
-                  <div className="ring" style={{ borderColor: userChoice.color }}></div>
+                  <div className="ring" style={{ borderColor: 'white' }}></div>
+                  <div className="ring" style={{ borderColor: 'white' }}></div>
+                  <div className="ring" style={{ borderColor: 'white' }}></div>
                 </>
               )}
             </div>
@@ -118,8 +118,17 @@ function App() {
               <button className={`choice ${computerChoice.color}`}>
                 <img src={computerChoice.icon} alt={computerChoice.name} className="icon" />
               </button>
+
+              {result === 'lose' && (
+                <>
+                  <div className="ring" style={{ borderColor: 'white' }}></div>
+                  <div className="ring" style={{ borderColor: 'white' }}></div>
+                  <div className="ring" style={{ borderColor: 'white' }}></div>
+                </>
+              )}
             </div>
-          </div>
+</div>
+
         </div>
       )}
 
