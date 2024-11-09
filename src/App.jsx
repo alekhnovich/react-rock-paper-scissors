@@ -98,14 +98,6 @@ function App() {
               <button className={`choice ${userChoice.color}`}>
                 <img src={userChoice.icon} alt={userChoice.name} className="icon" />
               </button>
-
-              {result === 'win' && (
-                <>
-                  <div className="ring" style={{ borderColor: 'white' }}></div>
-                  <div className="ring" style={{ borderColor: 'white' }}></div>
-                  <div className="ring" style={{ borderColor: 'white' }}></div>
-                </>
-              )}
             </div>
           </div>
           <div className="try-again-container">
@@ -118,14 +110,6 @@ function App() {
               <button className={`choice ${computerChoice.color}`}>
                 <img src={computerChoice.icon} alt={computerChoice.name} className="icon" />
               </button>
-
-              {result === 'lose' && (
-                <>
-                  <div className="ring" style={{ borderColor: 'white' }}></div>
-                  <div className="ring" style={{ borderColor: 'white' }}></div>
-                  <div className="ring" style={{ borderColor: 'white' }}></div>
-                </>
-              )}
             </div>
 </div>
 
