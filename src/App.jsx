@@ -4,7 +4,7 @@ import RockIcon from './assets/icon-rock.svg';
 import PaperIcon from './assets/icon-paper.svg';
 import ScissorsIcon from './assets/icon-scissors.svg';
 import Rules from './assets/image-rules.svg';
-import Close from './assets/icon-close.svg'
+import Close from './assets/icon-close.svg';
 
 function App() {
   const choices = [
@@ -20,7 +20,7 @@ function App() {
   );
   const [result, setResult] = useState('');
   const [showRules, setShowRules] = useState(false);
-  const [gameOver, setGameOver] = useState(false);//состояние, чтобы следить, закончена ли игра
+  const [gameOver, setGameOver] = useState(false);
 
   const toggleRules = () => {
     setShowRules(prevShowRules => !prevShowRules);
@@ -43,7 +43,7 @@ function App() {
     if (outcome === 'win') setScore(score + 1);
     if (outcome === 'lose') setScore(score - 1);
     setResult(outcome);
-    setGameOver(true);  // Set gameOver state to true
+    setGameOver(true);
   };
 
   const determineWinner = (user, computer) => {
@@ -94,19 +94,27 @@ function App() {
         <div className="result">
           <div className="user-choice">
             <p>YOU PICKED:</p>
-            <div className='user-choice-image-container'>
+            <div className="user-choice-image-container">
               <button className={`choice ${userChoice.color}`}>
                 <img src={userChoice.icon} alt={userChoice.name} className="icon" />
               </button>
+
+              {result === 'win' && (
+                <>
+                  <div className="ring" style={{ borderColor: userChoice.color }}></div>
+                  <div className="ring" style={{ borderColor: userChoice.color }}></div>
+                  <div className="ring" style={{ borderColor: userChoice.color }}></div>
+                </>
+              )}
             </div>
           </div>
-          <div className='try-again-container'>
+          <div className="try-again-container">
             <p>{result === 'win' ? 'YOU WIN!' : result === 'lose' ? 'YOU LOSE' : 'DRAW'}</p>
             <button className="try-again" onClick={tryAgain}>TRY AGAIN</button>
           </div>
           <div className="computer-choice">
             <p>THE HOUSE PICKED:</p>
-            <div className='computer-choice-image-container'>
+            <div className="computer-choice-image-container">
               <button className={`choice ${computerChoice.color}`}>
                 <img src={computerChoice.icon} alt={computerChoice.name} className="icon" />
               </button>
