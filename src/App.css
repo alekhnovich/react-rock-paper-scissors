@@ -138,6 +138,7 @@ body {
 
 .user-choice-image-container,
 .computer-choice-image-container {
+  position: relative;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
@@ -267,29 +268,27 @@ body {
   margin-top: 20px;
 }
 /* Стиль для анимированных полупрозрачных кругов */
-.ring {
+.user-choice-image-container .ring {
   position: absolute;
-  width: 220px;
-  height: 220px;
+  top: -10%;
+  width: 240px;
+  height: 240px;
   border-radius: 50%;
-  border: 8px solid rgba(255, 255, 255, 0.2);
+  border: 16px solid rgba(255, 255, 255, 0.2);  /* Увеличиваем толщину кольца */
   opacity: 0;
   animation: ring-animation 1.5s ease-out forwards;
 }
 
 .ring:nth-child(1) {
   animation-delay: 0s;
-  transform: scale(1.2);
 }
 
 .ring:nth-child(2) {
   animation-delay: 0.3s;
-  transform: scale(1.4);
 }
 
 .ring:nth-child(3) {
   animation-delay: 0.6s;
-  transform: scale(1.6);
 }
 
 @keyframes ring-animation {
@@ -297,8 +296,53 @@ body {
     opacity: 0;
     transform: scale(1);
   }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.2);
+  }
   100% {
-    opacity: 1;
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+}
+
+/* Для второго кольца */
+.ring:nth-child(2) {
+  animation: ring-animation-2 1.5s ease-out forwards;
+}
+
+@keyframes ring-animation-2 {
+  0% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.4);
+  }
+  100% {
+    opacity: 0.6;
     transform: scale(1.4);
   }
 }
+
+/* Для третьего кольца */
+.ring:nth-child(3) {
+  animation: ring-animation-3 1.5s ease-out forwards;
+}
+
+@keyframes ring-animation-3 {
+  0% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+  50% {
+    opacity: 0.2;
+    transform: scale(1.6);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(1.6);
+  }
+}
+
