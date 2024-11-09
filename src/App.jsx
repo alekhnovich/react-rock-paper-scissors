@@ -12,19 +12,45 @@ function App() {
     { name: 'PAPER', color: 'blue', icon: PaperIcon },
     { name: 'SCISSORS', color: 'yellow', icon: ScissorsIcon },
   ];
-  
+
   const [userChoice, setUserChoice] = useState('');
   const [computerChoice, setComputerChoice] = useState('');
-  const [score, setScore] = useState(
-    parseInt(localStorage.getItem('score')) || 0
-  );
+  const [score, setScore] = useState(parseInt(localStorage.getItem('score')) || 0);
   const [result, setResult] = useState('');
   const [showRules, setShowRules] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [timer, setTimer] = useState(10); // таймер на 10 секунд
+  const [timerRunning, setTimerRunning] = useState(false); // статус таймера (работает ли он)
 
   const toggleRules = () => {
     setShowRules(prevShowRules => !prevShowRules);
   };
+
+  useEffect(() => {
+    if (!gameOver && timer === 10) { //запуск таймера только если игра началась
+      setTimerRunning(true);
+    }
+  }, [gameOver, timer]);
+
+  useEffect(() => {
+    if (timerRunning && timer > 0) {
+      const interval = setInterval(() => {
+        setTimer(prevTimer => prevTimer - 1);
+      }, 1000);
+      return () => clearInterval(interval); // очистить интервал после завершения
+    }
+
+    if (timer === 0 && !userChoice) {
+      //если время истекло, делаем случайный выбор для игрока и вычисляем результат
+      handleAutoChoice();
+    }
+  }, [timer, timerRunning]);
+
+  useEffect(() => {
+    if (gameOver) {
+      setTimerRunning(false);  //останавливаем таймер после завершения игры
+    }
+  }, [gameOver]);
 
   useEffect(() => {
     localStorage.setItem('score', score);
@@ -34,16 +60,37 @@ function App() {
     return choices[Math.floor(Math.random() * choices.length)];
   };
 
-  const playGame = (userChoice) => {
+  const playGame = (choice) => {
+    setUserChoice(choice);
     const computerChoice = getComputerChoice();
-    setUserChoice(userChoice);
     setComputerChoice(computerChoice);
 
-    const outcome = determineWinner(userChoice, computerChoice);
-    if (outcome === 'win') setScore(score + 1);
-    if (outcome === 'lose') setScore(score - 1);
+    const outcome = determineWinner(choice, computerChoice);
+    if (outcome === 'win') {
+      setScore(prevScore => prevScore + 1);
+    } else if (outcome === 'lose') {
+      setScore(prevScore => prevScore - 1);
+    }
     setResult(outcome);
     setGameOver(true);
+    setTimerRunning(false);
+  };
+
+  const handleAutoChoice = () => {
+    const randomChoice = getComputerChoice(); // случайный выбор для игрока
+    setUserChoice(randomChoice);
+    const computerChoice = getComputerChoice(); //компьютерный выбор
+    setComputerChoice(computerChoice);
+    
+    const outcome = determineWinner(randomChoice, computerChoice);
+    if (outcome === 'win') {
+      setScore(prevScore => prevScore + 1);
+    } else if (outcome === 'lose') {
+      setScore(prevScore => prevScore - 1);
+    }
+    setResult(outcome);
+    setGameOver(true); //завершение игры
+    setTimerRunning(false); // остановка таймера
   };
 
   const determineWinner = (user, computer) => {
@@ -63,13 +110,19 @@ function App() {
     setUserChoice('');
     setComputerChoice('');
     setResult('');
-    setGameOver(false); 
+    setGameOver(false);
+    setTimer(10);
+    setTimerRunning(false);
   };
 
   return (
     <div className="game">
       <div className="header">
         <h1 className='name-of-game'>ROCK PAPER SCISSORS</h1>
+        <div className='timer'>
+          <p>TIMER:</p>
+          <p>{timer} SECONDS</p>
+        </div>
         <div className='score-div'>
           <span className='score'>SCORE</span>
           <div className='score-value'>{score}</div>
@@ -111,8 +164,7 @@ function App() {
                 <img src={computerChoice.icon} alt={computerChoice.name} className="icon" />
               </button>
             </div>
-</div>
-
+          </div>
         </div>
       )}
 
